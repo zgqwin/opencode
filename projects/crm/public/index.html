@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>专业 CRM 系统</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .sidebar {
+        transition: all 0.3s ease;
+      }
+      .sidebar.collapsed {
+        width: 64px;
+      }
+      .main-content {
+        transition: margin-left 0.3s ease;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-50"
+    x-data="{ sidebarOpen: true, currentView: 'dashboard', token: localStorage.getItem('token') }"
+  >
+    <!-- Login Screen -->
+    <div x-show="!token" class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">专业 CRM 系统</h2>
+          <p class="mt-2 text-center text-sm text-gray-600">登录您的账户</p>
+        </div>
+        <form class="mt-8 space-y-6" @submit.prevent="login()">
+          <div class="rounded-md shadow-sm -space-y-px">
+            <div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="邮箱地址"
+              />
+            </div>
+            <div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                class="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="密码"
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              登录
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <div x-show="token" class="flex h-screen">
+      <!-- Sidebar -->
+      <div class="sidebar bg-gray-800 text-white" :class="{ 'collapsed': !sidebarOpen }" style="width: 256px">
+        <div class="p-4">
+          <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold" x-show="sidebarOpen">CRM</h1>
+            <button @click="sidebarOpen = !sidebarOpen" class="p-1 rounded hover:bg-gray-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="mt-6">
+          <a
+            @click="currentView = 'dashboard'"
+            class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+            :class="{ 'bg-gray-900': currentView === 'dashboard' }"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+            <span class="ml-3" x-show="sidebarOpen">仪表板</span>
+          </a>
+
+          <a
+            @click="currentView = 'customers'"
+            class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+            :class="{ 'bg-gray-900': currentView === 'customers' }"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              ></path>
+            </svg>
+            <span class="ml-3" x-show="sidebarOpen">客户管理</span>
+          </a>
+
+          <a
+            @click="currentView = 'opportunities'"
+            class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+            :class="{ 'bg-gray-900': currentView === 'opportunities' }"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              ></path>
+            </svg>
+            <span class="ml-3" x-show="sidebarOpen">销售机会</span>
+          </a>
+
+          <a
+            @click="currentView = 'activities'"
+            class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+            :class="{ 'bg-gray-900': currentView === 'activities' }"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span class="ml-3" x-show="sidebarOpen">活动管理</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content flex-1 flex flex-col" :class="{ 'ml-64': sidebarOpen, 'ml-16': !sidebarOpen }">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+          <div class="flex justify-between items-center px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900" x-text="getViewTitle()"></h2>
+            <div class="flex items-center space-x-4">
+              <button @click="logout()" class="text-gray-600 hover:text-gray-900">退出登录</button>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <main class="flex-1 overflow-auto">
+          <!-- Dashboard -->
+          <div x-show="currentView === 'dashboard'" class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">客户统计</h3>
+                <div id="customer-stats"></div>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">销售管道</h3>
+                <div id="pipeline-stats"></div>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">近期活动</h3>
+                <div id="upcoming-activities"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customers -->
+          <div x-show="currentView === 'customers'" class="p-6">
+            <div class="bg-white rounded-lg shadow">
+              <div class="p-6 border-b">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold">客户列表</h3>
+                  <button @click="showCustomerForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                    新增客户
+                  </button>
+                </div>
+                <div class="flex space-x-4">
+                  <input
+                    type="text"
+                    placeholder="搜索客户..."
+                    class="px-3 py-2 border border-gray-300 rounded"
+                    x-model="customerSearch"
+                    @input="searchCustomers()"
+                  />
+                  <select
+                    class="px-3 py-2 border border-gray-300 rounded"
+                    x-model="customerStatus"
+                    @change="searchCustomers()"
+                  >
+                    <option value="">所有状态</option>
+                    <option value="lead">潜在客户</option>
+                    <option value="customer">客户</option>
+                    <option value="inactive">非活跃</option>
+                  </select>
+                </div>
+              </div>
+              <div id="customers-list" class="p-6"></div>
+            </div>
+          </div>
+
+          <!-- Opportunities -->
+          <div x-show="currentView === 'opportunities'" class="p-6">
+            <div class="bg-white rounded-lg shadow">
+              <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-lg font-semibold">销售机会</h3>
+                  <button @click="showOpportunityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                    新增机会
+                  </button>
+                </div>
+              </div>
+              <div id="opportunities-list" class="p-6"></div>
+            </div>
+          </div>
+
+          <!-- Activities -->
+          <div x-show="currentView === 'activities'" class="p-6">
+            <div class="bg-white rounded-lg shadow">
+              <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-lg font-semibold">活动管理</h3>
+                  <button @click="showActivityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                    新增活动
+                  </button>
+                </div>
+              </div>
+              <div id="activities-list" class="p-6"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function getViewTitle() {
+        const views = {
+          dashboard: "仪表板",
+          customers: "客户管理",
+          opportunities: "销售机会",
+          activities: "活动管理",
+        }
+        return views[this.currentView] || "CRM 系统"
+      }
+
+      async function login() {
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+
+        try {
+          const response = await fetch("/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          })
+
+          if (response.ok) {
+            const data = await response.json()
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("user", JSON.stringify(data.user))
+
+            // 刷新页面以重新加载 Alpine.js 应用
+            window.location.reload()
+          } else {
+            alert("登录失败")
+          }
+        } catch (error) {
+          alert("登录失败")
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        this.token = null
+      }
+
+      async function loadDashboard() {
+        // 加载仪表板数据
+        await loadCustomerStats()
+        await loadPipelineStats()
+        await loadUpcomingActivities()
+      }
+
+      async function loadCustomerStats() {
+        const response = await fetch("/api/dashboard/stats", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const data = await response.json()
+          // 更新客户统计显示
+        }
+      }
+
+      async function loadPipelineStats() {
+        const response = await fetch("/api/dashboard/stats", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const data = await response.json()
+          // 更新销售管道显示
+        }
+      }
+
+      async function loadUpcomingActivities() {
+        const response = await fetch("/api/dashboard/stats", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const data = await response.json()
+          // 更新近期活动显示
+        }
+      }
+
+      async function loadCustomers(search = "", status = "") {
+        const url = new URL("/api/customers", window.location.origin)
+        if (search) url.searchParams.set("search", search)
+        if (status) url.searchParams.set("status", status)
+
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const customers = await response.json()
+          const container = document.getElementById("customers-list")
+          container.innerHTML = `
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客户名称</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">邮箱</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">分配人员</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                ${customers
+                  .map(
+                    (customer) => `
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium text-gray-900">${customer.name}</div>
+                      <div class="text-sm text-gray-500">${customer.company || "无"}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        customer.status === "customer"
+                          ? "bg-green-100 text-green-800"
+                          : customer.status === "lead"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                      }">
+                        ${customer.status === "customer" ? "客户" : customer.status === "lead" ? "潜在客户" : "非活跃"}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.assigned_name || "未分配"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button @click="editCustomer(${customer.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                      <button @click="deleteCustomer(${customer.id})" class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          `
+        }
+      }
+
+      async function loadOpportunities() {
+        const response = await fetch("/api/opportunities", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const opportunities = await response.json()
+          const container = document.getElementById("opportunities-list")
+          container.innerHTML = `
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">机会标题</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">客户</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">阶段</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">金额</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                ${opportunities
+                  .map(
+                    (opportunity) => `
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium text-gray-900">${opportunity.title}</div>
+                      <div class="text-sm text-gray-500">${opportunity.description || "无描述"}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${opportunity.customer_name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        opportunity.stage === "closed_won"
+                          ? "bg-green-100 text-green-800"
+                          : opportunity.stage === "closed_lost"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-blue-100 text-blue-800"
+                      }">
+                        ${
+                          {
+                            prospecting: "潜在",
+                            qualification: "资格",
+                            proposal: "提案",
+                            negotiation: "谈判",
+                            closed_won: "成交",
+                            closed_lost: "失败",
+                          }[opportunity.stage]
+                        }
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${opportunity.amount ? `¥${opportunity.amount.toLocaleString()}` : "未设置"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button @click="editOpportunity(${opportunity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                      <button @click="deleteOpportunity(${opportunity.id})" class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          `
+        }
+      }
+
+      async function loadActivities() {
+        const response = await fetch("/api/activities", {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        if (response.ok) {
+          const activities = await response.json()
+          const container = document.getElementById("activities-list")
+          container.innerHTML = `
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">活动类型</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">主题</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">截止日期</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                ${activities
+                  .map(
+                    (activity) => `
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        activity.type === "call"
+                          ? "bg-blue-100 text-blue-800"
+                          : activity.type === "email"
+                            ? "bg-green-100 text-green-800"
+                            : activity.type === "meeting"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-yellow-100 text-yellow-800"
+                      }">
+                        ${
+                          {
+                            call: "电话",
+                            email: "邮件",
+                            meeting: "会议",
+                            task: "任务",
+                          }[activity.type]
+                        }
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium text-gray-900">${activity.subject}</div>
+                      <div class="text-sm text-gray-500">${activity.description || "无描述"}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${activity.due_date || "未设置"}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        activity.completed ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+                      }">
+                        ${activity.completed ? "已完成" : "进行中"}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button @click="editActivity(${activity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                      <button @click="deleteActivity(${activity.id})" class="text-red-600 hover:text-red-900">删除</button>
+                    </td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          `
+        }
+      }
+
+      function showCustomerForm() {
+        // 显示客户表单模态框
+        alert("新增客户功能待实现")
+      }
+
+      function showOpportunityForm() {
+        // 显示机会表单模态框
+        alert("新增销售机会功能待实现")
+      }
+
+      function showActivityForm() {
+        // 显示活动表单模态框
+        alert("新增活动功能待实现")
+      }
+
+      // 页面加载时自动加载数据
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("app", () => ({
+          token: localStorage.getItem("token"),
+          currentView: "dashboard",
+          sidebarOpen: true,
+          customerSearch: "",
+          customerStatus: "",
+
+          init() {
+            if (this.token) {
+              this.loadCurrentView()
+            }
+          },
+
+          searchCustomers() {
+            this.loadCustomers()
+          },
+
+          loadCurrentView() {
+            switch (this.currentView) {
+              case "dashboard":
+                this.loadDashboard()
+                break
+              case "customers":
+                this.loadCustomers()
+                break
+              case "opportunities":
+                this.loadOpportunities()
+                break
+              case "activities":
+                this.loadActivities()
+                break
+            }
+          },
+
+          async loadDashboard() {
+            await this.loadCustomerStats()
+            await this.loadPipelineStats()
+            await this.loadUpcomingActivities()
+          },
+
+          async loadCustomerStats() {
+            const response = await fetch("/api/dashboard/stats", {
+              headers: { Authorization: `Bearer ${this.token}` },
+            })
+            if (response.ok) {
+              const data = await response.json()
+              const container = document.getElementById("customer-stats")
+              container.innerHTML = data.customers
+                .map(
+                  (stat) => `
+                <div class="mb-2">
+                  <span class="text-sm">${
+                    {
+                      lead: "潜在客户",
+                      customer: "客户",
+                      inactive: "非活跃",
+                    }[stat.status]
+                  }:</span>
+                  <span class="font-semibold ml-2">${stat.count}</span>
+                </div>
+              `,
+                )
+                .join("")
+            }
+          },
+
+          async loadPipelineStats() {
+            const response = await fetch("/api/dashboard/stats", {
+              headers: { Authorization: `Bearer ${this.token}` },
+            })
+            if (response.ok) {
+              const data = await response.json()
+              const container = document.getElementById("pipeline-stats")
+              container.innerHTML = data.pipeline
+                .map(
+                  (stat) => `
+                <div class="mb-2">
+                  <span class="text-sm">${
+                    {
+                      prospecting: "潜在",
+                      qualification: "资格",
+                      proposal: "提案",
+                      negotiation: "谈判",
+                    }[stat.stage]
+                  }:</span>
+                  <span class="font-semibold ml-2">${stat.count}</span>
+                  <div class="text-xs text-gray-500">¥${stat.total_amount?.toLocaleString() || 0}</div>
+                </div>
+              `,
+                )
+                .join("")
+            }
+          },
+
+          async loadUpcomingActivities() {
+            const response = await fetch("/api/dashboard/stats", {
+              headers: { Authorization: `Bearer ${this.token}` },
+            })
+            if (response.ok) {
+              const data = await response.json()
+              const container = document.getElementById("upcoming-activities")
+              container.innerHTML = data.upcoming_activities
+                .slice(0, 5)
+                .map(
+                  (activity) => `
+                <div class="mb-2 p-2 border rounded">
+                  <div class="text-sm font-medium">${activity.subject}</div>
+                  <div class="text-xs text-gray-500">${activity.due_date}</div>
+                </div>
+              `,
+                )
+                .join("")
+            }
+          },
+
+          async loadCustomers() {
+            await loadCustomers(this.customerSearch, this.customerStatus)
+          },
+
+          async loadOpportunities() {
+            await loadOpportunities()
+          },
+
+          async loadActivities() {
+            await loadActivities()
+          },
+        }))
+      })
+    </script>
+  </body>
+</html>
