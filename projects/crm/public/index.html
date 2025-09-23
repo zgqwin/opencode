@@ -21,7 +21,7 @@
   </head>
   <body
     class="bg-gray-50"
-    x-data="{ sidebarOpen: true, currentView: 'dashboard', token: localStorage.getItem('token') }"
+    x-data="{ sidebarOpen: true, currentView: 'dashboard', token: localStorage.getItem('token'), customerSearch: '', customerStatus: '' }"
   >
     <!-- Login Screen -->
     <div x-show="!token" class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -191,7 +191,7 @@
               <div class="p-6 border-b">
                 <div class="flex justify-between items-center mb-4">
                   <h3 class="text-lg font-semibold">客户列表</h3>
-                  <button @click="showCustomerForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                  <button onclick="showCustomerForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
                     新增客户
                   </button>
                 </div>
@@ -225,7 +225,7 @@
               <div class="p-6 border-b">
                 <div class="flex justify-between items-center">
                   <h3 class="text-lg font-semibold">销售机会</h3>
-                  <button @click="showOpportunityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                  <button onclick="showOpportunityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
                     新增机会
                   </button>
                 </div>
@@ -240,7 +240,7 @@
               <div class="p-6 border-b">
                 <div class="flex justify-between items-center">
                   <h3 class="text-lg font-semibold">活动管理</h3>
-                  <button @click="showActivityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
+                  <button onclick="showActivityForm()" class="bg-indigo-600 text-white px-4 py-2 rounded">
                     新增活动
                   </button>
                 </div>
@@ -332,6 +332,13 @@
         }
       }
 
+      async function searchCustomers() {
+        const alpineApp = document.querySelector("[x-data]").__x
+        if (alpineApp) {
+          await alpineApp.$data.loadCustomers(alpineApp.$data.customerSearch, alpineApp.$data.customerStatus)
+        }
+      }
+
       async function loadCustomers(search = "", status = "") {
         const url = new URL("/api/customers", window.location.origin)
         if (search) url.searchParams.set("search", search)
@@ -376,10 +383,10 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${customer.assigned_name || "未分配"}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button @click="editCustomer(${customer.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
-                      <button @click="deleteCustomer(${customer.id})" class="text-red-600 hover:text-red-900">删除</button>
-                    </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                       <button onclick="editCustomer(${customer.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                       <button onclick="deleteCustomer(${customer.id})" class="text-red-600 hover:text-red-900">删除</button>
+                     </td>
                   </tr>
                 `,
                   )
@@ -439,10 +446,10 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${opportunity.amount ? `¥${opportunity.amount.toLocaleString()}` : "未设置"}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button @click="editOpportunity(${opportunity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
-                      <button @click="deleteOpportunity(${opportunity.id})" class="text-red-600 hover:text-red-900">删除</button>
-                    </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                       <button onclick="editOpportunity(${opportunity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                       <button onclick="deleteOpportunity(${opportunity.id})" class="text-red-600 hover:text-red-900">删除</button>
+                     </td>
                   </tr>
                 `,
                   )
@@ -508,10 +515,10 @@
                         ${activity.completed ? "已完成" : "进行中"}
                       </span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button @click="editActivity(${activity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
-                      <button @click="deleteActivity(${activity.id})" class="text-red-600 hover:text-red-900">删除</button>
-                    </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                       <button onclick="editActivity(${activity.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">编辑</button>
+                       <button onclick="deleteActivity(${activity.id})" class="text-red-600 hover:text-red-900">删除</button>
+                     </td>
                   </tr>
                 `,
                   )
@@ -522,20 +529,330 @@
         }
       }
 
-      function showCustomerForm() {
-        // 显示客户表单模态框
-        alert("新增客户功能待实现")
+      // 客户模态框功能
+      function showCustomerForm(customer = null) {
+        const modal = document.getElementById("customerModal")
+        const title = document.getElementById("customerModalTitle")
+        const form = document.getElementById("customerForm")
+
+        if (customer) {
+          title.textContent = "编辑客户"
+          document.getElementById("customerId").value = customer.id
+          document.getElementById("customerName").value = customer.name
+          document.getElementById("customerEmail").value = customer.email
+          document.getElementById("customerPhone").value = customer.phone || ""
+          document.getElementById("customerCompany").value = customer.company || ""
+          document.getElementById("customerStatus").value = customer.status
+        } else {
+          title.textContent = "新增客户"
+          form.reset()
+          document.getElementById("customerId").value = ""
+        }
+
+        modal.classList.remove("hidden")
       }
 
-      function showOpportunityForm() {
-        // 显示机会表单模态框
-        alert("新增销售机会功能待实现")
+      function closeCustomerModal() {
+        document.getElementById("customerModal").classList.add("hidden")
       }
 
-      function showActivityForm() {
-        // 显示活动表单模态框
-        alert("新增活动功能待实现")
+      // 销售机会模态框功能
+      function showOpportunityForm(opportunity = null) {
+        const modal = document.getElementById("opportunityModal")
+        const title = document.getElementById("opportunityModalTitle")
+        const form = document.getElementById("opportunityForm")
+
+        if (opportunity) {
+          title.textContent = "编辑销售机会"
+          document.getElementById("opportunityId").value = opportunity.id
+          document.getElementById("opportunityTitle").value = opportunity.title
+          document.getElementById("opportunityDescription").value = opportunity.description || ""
+          document.getElementById("opportunityAmount").value = opportunity.amount || ""
+          document.getElementById("opportunityStage").value = opportunity.stage
+        } else {
+          title.textContent = "新增销售机会"
+          form.reset()
+          document.getElementById("opportunityId").value = ""
+        }
+
+        modal.classList.remove("hidden")
       }
+
+      function closeOpportunityModal() {
+        document.getElementById("opportunityModal").classList.add("hidden")
+      }
+
+      // 活动模态框功能
+      function showActivityForm(activity = null) {
+        const modal = document.getElementById("activityModal")
+        const title = document.getElementById("activityModalTitle")
+        const form = document.getElementById("activityForm")
+
+        if (activity) {
+          title.textContent = "编辑活动"
+          document.getElementById("activityId").value = activity.id
+          document.getElementById("activityType").value = activity.type
+          document.getElementById("activitySubject").value = activity.subject
+          document.getElementById("activityDescription").value = activity.description || ""
+          document.getElementById("activityDueDate").value = activity.due_date
+            ? activity.due_date.replace(" ", "T")
+            : ""
+        } else {
+          title.textContent = "新增活动"
+          form.reset()
+          document.getElementById("activityId").value = ""
+        }
+
+        modal.classList.remove("hidden")
+      }
+
+      function closeActivityModal() {
+        document.getElementById("activityModal").classList.add("hidden")
+      }
+
+      // 编辑和删除功能
+      async function editCustomer(id) {
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(`/api/customers/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          if (response.ok) {
+            const customer = await response.json()
+            showCustomerForm(customer)
+          }
+        } catch (error) {
+          alert("获取客户信息失败")
+        }
+      }
+
+      async function deleteCustomer(id) {
+        if (confirm("确定要删除这个客户吗？")) {
+          const token = localStorage.getItem("token")
+          try {
+            const response = await fetch(`/api/customers/${id}`, {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            if (response.ok) {
+              // 重新加载客户列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadCustomers()
+              }
+            } else {
+              alert("删除失败")
+            }
+          } catch (error) {
+            alert("删除失败")
+          }
+        }
+      }
+
+      async function editOpportunity(id) {
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(`/api/opportunities/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          if (response.ok) {
+            const opportunity = await response.json()
+            showOpportunityForm(opportunity)
+          }
+        } catch (error) {
+          alert("获取机会信息失败")
+        }
+      }
+
+      async function deleteOpportunity(id) {
+        if (confirm("确定要删除这个销售机会吗？")) {
+          const token = localStorage.getItem("token")
+          try {
+            const response = await fetch(`/api/opportunities/${id}`, {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            if (response.ok) {
+              // 重新加载机会列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadOpportunities()
+              }
+            } else {
+              alert("删除失败")
+            }
+          } catch (error) {
+            alert("删除失败")
+          }
+        }
+      }
+
+      async function editActivity(id) {
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(`/api/activities/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          if (response.ok) {
+            const activity = await response.json()
+            showActivityForm(activity)
+          }
+        } catch (error) {
+          alert("获取活动信息失败")
+        }
+      }
+
+      async function deleteActivity(id) {
+        if (confirm("确定要删除这个活动吗？")) {
+          const token = localStorage.getItem("token")
+          try {
+            const response = await fetch(`/api/activities/${id}`, {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            if (response.ok) {
+              // 重新加载活动列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadActivities()
+              }
+            } else {
+              alert("删除失败")
+            }
+          } catch (error) {
+            alert("删除失败")
+          }
+        }
+      }
+
+      // 表单提交处理
+      document.addEventListener("DOMContentLoaded", function () {
+        // 客户表单提交
+        document.getElementById("customerForm").addEventListener("submit", async function (e) {
+          e.preventDefault()
+
+          const token = localStorage.getItem("token")
+          const customerId = document.getElementById("customerId").value
+          const formData = {
+            name: document.getElementById("customerName").value,
+            email: document.getElementById("customerEmail").value,
+            phone: document.getElementById("customerPhone").value,
+            company: document.getElementById("customerCompany").value,
+            status: document.getElementById("customerStatus").value,
+          }
+
+          try {
+            const url = customerId ? `/api/customers/${customerId}` : "/api/customers"
+            const method = customerId ? "PUT" : "POST"
+
+            const response = await fetch(url, {
+              method: method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(formData),
+            })
+
+            if (response.ok) {
+              closeCustomerModal()
+              // 重新加载客户列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadCustomers()
+              }
+            } else {
+              alert("操作失败")
+            }
+          } catch (error) {
+            alert("操作失败")
+          }
+        })
+
+        // 销售机会表单提交
+        document.getElementById("opportunityForm").addEventListener("submit", async function (e) {
+          e.preventDefault()
+
+          const token = localStorage.getItem("token")
+          const opportunityId = document.getElementById("opportunityId").value
+          const formData = {
+            title: document.getElementById("opportunityTitle").value,
+            description: document.getElementById("opportunityDescription").value,
+            amount: document.getElementById("opportunityAmount").value
+              ? parseFloat(document.getElementById("opportunityAmount").value)
+              : null,
+            stage: document.getElementById("opportunityStage").value,
+          }
+
+          try {
+            const url = opportunityId ? `/api/opportunities/${opportunityId}` : "/api/opportunities"
+            const method = opportunityId ? "PUT" : "POST"
+
+            const response = await fetch(url, {
+              method: method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(formData),
+            })
+
+            if (response.ok) {
+              closeOpportunityModal()
+              // 重新加载机会列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadOpportunities()
+              }
+            } else {
+              alert("操作失败")
+            }
+          } catch (error) {
+            alert("操作失败")
+          }
+        })
+
+        // 活动表单提交
+        document.getElementById("activityForm").addEventListener("submit", async function (e) {
+          e.preventDefault()
+
+          const token = localStorage.getItem("token")
+          const activityId = document.getElementById("activityId").value
+          const formData = {
+            type: document.getElementById("activityType").value,
+            subject: document.getElementById("activitySubject").value,
+            description: document.getElementById("activityDescription").value,
+            due_date: document.getElementById("activityDueDate").value,
+          }
+
+          try {
+            const url = activityId ? `/api/activities/${activityId}` : "/api/activities"
+            const method = activityId ? "PUT" : "POST"
+
+            const response = await fetch(url, {
+              method: method,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(formData),
+            })
+
+            if (response.ok) {
+              closeActivityModal()
+              // 重新加载活动列表
+              const alpineApp = document.querySelector("[x-data]").__x
+              if (alpineApp) {
+                alpineApp.$data.loadActivities()
+              }
+            } else {
+              alert("操作失败")
+            }
+          } catch (error) {
+            alert("操作失败")
+          }
+        })
+      })
 
       // 页面加载时自动加载数据
       document.addEventListener("alpine:init", () => {
@@ -668,5 +985,138 @@
         }))
       })
     </script>
+
+    <!-- 客户表单模态框 -->
+    <div id="customerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="customerModalTitle">新增客户</h3>
+          <form id="customerForm" class="mt-2">
+            <input type="hidden" id="customerId" />
+            <div class="mb-4">
+              <input
+                type="text"
+                id="customerName"
+                placeholder="客户姓名"
+                class="w-full px-3 py-2 border rounded"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <input
+                type="email"
+                id="customerEmail"
+                placeholder="邮箱地址"
+                class="w-full px-3 py-2 border rounded"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <input type="tel" id="customerPhone" placeholder="电话号码" class="w-full px-3 py-2 border rounded" />
+            </div>
+            <div class="mb-4">
+              <input type="text" id="customerCompany" placeholder="公司名称" class="w-full px-3 py-2 border rounded" />
+            </div>
+            <div class="mb-4">
+              <select id="customerStatus" class="w-full px-3 py-2 border rounded">
+                <option value="lead">潜在客户</option>
+                <option value="customer">客户</option>
+                <option value="inactive">非活跃</option>
+              </select>
+            </div>
+            <div class="flex justify-end space-x-2">
+              <button type="button" onclick="closeCustomerModal()" class="px-4 py-2 bg-gray-300 rounded">取消</button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 销售机会表单模态框 -->
+    <div id="opportunityModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="opportunityModalTitle">新增销售机会</h3>
+          <form id="opportunityForm" class="mt-2">
+            <input type="hidden" id="opportunityId" />
+            <div class="mb-4">
+              <input
+                type="text"
+                id="opportunityTitle"
+                placeholder="机会标题"
+                class="w-full px-3 py-2 border rounded"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <textarea
+                id="opportunityDescription"
+                placeholder="描述"
+                class="w-full px-3 py-2 border rounded"
+              ></textarea>
+            </div>
+            <div class="mb-4">
+              <input type="number" id="opportunityAmount" placeholder="金额" class="w-full px-3 py-2 border rounded" />
+            </div>
+            <div class="mb-4">
+              <select id="opportunityStage" class="w-full px-3 py-2 border rounded">
+                <option value="prospecting">潜在</option>
+                <option value="qualification">资格</option>
+                <option value="proposal">提案</option>
+                <option value="negotiation">谈判</option>
+                <option value="closed_won">成交</option>
+                <option value="closed_lost">失败</option>
+              </select>
+            </div>
+            <div class="flex justify-end space-x-2">
+              <button type="button" onclick="closeOpportunityModal()" class="px-4 py-2 bg-gray-300 rounded">
+                取消
+              </button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 活动表单模态框 -->
+    <div id="activityModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="activityModalTitle">新增活动</h3>
+          <form id="activityForm" class="mt-2">
+            <input type="hidden" id="activityId" />
+            <div class="mb-4">
+              <select id="activityType" class="w-full px-3 py-2 border rounded">
+                <option value="call">电话</option>
+                <option value="email">邮件</option>
+                <option value="meeting">会议</option>
+                <option value="task">任务</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <input
+                type="text"
+                id="activitySubject"
+                placeholder="主题"
+                class="w-full px-3 py-2 border rounded"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <textarea id="activityDescription" placeholder="描述" class="w-full px-3 py-2 border rounded"></textarea>
+            </div>
+            <div class="mb-4">
+              <input type="datetime-local" id="activityDueDate" class="w-full px-3 py-2 border rounded" />
+            </div>
+            <div class="flex justify-end space-x-2">
+              <button type="button" onclick="closeActivityModal()" class="px-4 py-2 bg-gray-300 rounded">取消</button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

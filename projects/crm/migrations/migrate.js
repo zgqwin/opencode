@@ -25,7 +25,7 @@ db.serialize(() => {
       status TEXT DEFAULT 'lead',
       source TEXT,
       assigned_to INTEGER,
-      created_by INTEGER NOT NULL,
+      created_by INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (assigned_to) REFERENCES users(id),

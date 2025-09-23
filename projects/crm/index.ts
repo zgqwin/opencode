@@ -100,112 +100,190 @@ const checkAuth = async (req: AuthRequest, res: Response, next: NextFunction) =>
 
 // Customers API
 app.get("/api/customers", checkAuth, async (req: AuthRequest, res: Response) => {
-  const { search, status, assigned_to } = req.query
+  try {
+    const { search, status, assigned_to } = req.query
 
-  if (search) {
-    const customers = await customerModel.search(search as string, {
-      status: (status as string) || undefined,
-      assigned_to: assigned_to ? parseInt(assigned_to as string) : undefined,
-    })
-    return res.json(customers)
+    if (search) {
+      const customers = await customerModel.search(search as string, {
+        status: (status as string) || undefined,
+        assigned_to: assigned_to ? parseInt(assigned_to as string) : undefined,
+      })
+      return res.json(customers)
+    }
+
+    const customers = await customerModel.getAll()
+    res.json(customers)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取客户列表失败" })
   }
-
-  const customers = await customerModel.getAll()
-  res.json(customers)
 })
 
 app.post("/api/customers", checkAuth, async (req: AuthRequest, res: Response) => {
-  const customer = await customerModel.create({ ...req.body, created_by: req.user!.id })
-  res.status(201).json(customer)
+  try {
+    const customer = await customerModel.create({
+      ...req.body,
+      created_by: req.user?.id || 1,
+    })
+    res.status(201).json(customer)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "创建客户失败" })
+  }
 })
 
 app.get("/api/customers/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const customer = await customerModel.getById(parseInt(req.params.id))
-  if (!customer) return res.status(404).json({ error: "Customer not found" })
-  res.json(customer)
+  try {
+    const customer = await customerModel.getById(parseInt(req.params.id))
+    if (!customer) return res.status(404).json({ error: "Customer not found" })
+    res.json(customer)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取客户信息失败" })
+  }
 })
 
 app.put("/api/customers/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const customer = await customerModel.update(parseInt(req.params.id), req.body)
-  if (!customer) return res.status(404).json({ error: "Customer not found" })
-  res.json(customer)
+  try {
+    const customer = await customerModel.update(parseInt(req.params.id), req.body)
+    if (!customer) return res.status(404).json({ error: "Customer not found" })
+    res.json(customer)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "更新客户失败" })
+  }
 })
 
 app.delete("/api/customers/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const deleted = await customerModel.delete(parseInt(req.params.id))
-  if (!deleted) return res.status(404).json({ error: "Customer not found" })
-  res.json({ message: "Customer deleted" })
+  try {
+    const deleted = await customerModel.delete(parseInt(req.params.id))
+    if (!deleted) return res.status(404).json({ error: "Customer not found" })
+    res.json({ message: "Customer deleted" })
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "删除客户失败" })
+  }
 })
 
 // Opportunities API
 app.get("/api/opportunities", checkAuth, async (req: AuthRequest, res: Response) => {
-  const opportunities = await opportunityModel.getAll()
-  res.json(opportunities)
+  try {
+    const opportunities = await opportunityModel.getAll()
+    res.json(opportunities)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取销售机会列表失败" })
+  }
 })
 
 app.post("/api/opportunities", checkAuth, async (req: AuthRequest, res: Response) => {
-  const opportunity = await opportunityModel.create({ ...req.body, created_by: req.user!.id })
-  res.status(201).json(opportunity)
+  try {
+    const opportunity = await opportunityModel.create({ ...req.body, created_by: req.user!.id })
+    res.status(201).json(opportunity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "创建销售机会失败" })
+  }
 })
 
 app.get("/api/opportunities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const opportunity = await opportunityModel.getById(parseInt(req.params.id))
-  if (!opportunity) return res.status(404).json({ error: "Opportunity not found" })
-  res.json(opportunity)
+  try {
+    const opportunity = await opportunityModel.getById(parseInt(req.params.id))
+    if (!opportunity) return res.status(404).json({ error: "Opportunity not found" })
+    res.json(opportunity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取销售机会信息失败" })
+  }
 })
 
 app.put("/api/opportunities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const opportunity = await opportunityModel.update(parseInt(req.params.id), req.body)
-  if (!opportunity) return res.status(404).json({ error: "Opportunity not found" })
-  res.json(opportunity)
+  try {
+    const opportunity = await opportunityModel.update(parseInt(req.params.id), req.body)
+    if (!opportunity) return res.status(404).json({ error: "Opportunity not found" })
+    res.json(opportunity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "更新销售机会失败" })
+  }
 })
 
 app.delete("/api/opportunities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const deleted = await opportunityModel.delete(parseInt(req.params.id))
-  if (!deleted) return res.status(404).json({ error: "Opportunity not found" })
-  res.json({ message: "Opportunity deleted" })
+  try {
+    const deleted = await opportunityModel.delete(parseInt(req.params.id))
+    if (!deleted) return res.status(404).json({ error: "Opportunity not found" })
+    res.json({ message: "Opportunity deleted" })
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "删除销售机会失败" })
+  }
 })
 
 // Activities API
 app.get("/api/activities", checkAuth, async (req: AuthRequest, res: Response) => {
-  const activities = await activityModel.getAll()
-  res.json(activities)
+  try {
+    const activities = await activityModel.getAll()
+    res.json(activities)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取活动列表失败" })
+  }
 })
 
 app.post("/api/activities", checkAuth, async (req: AuthRequest, res: Response) => {
-  const activity = await activityModel.create({ ...req.body, created_by: req.user!.id })
-  res.status(201).json(activity)
+  try {
+    const activity = await activityModel.create({ ...req.body, created_by: req.user!.id })
+    res.status(201).json(activity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "创建活动失败" })
+  }
 })
 
 app.get("/api/activities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const activity = await activityModel.getById(parseInt(req.params.id))
-  if (!activity) return res.status(404).json({ error: "Activity not found" })
-  res.json(activity)
+  try {
+    const activity = await activityModel.getById(parseInt(req.params.id))
+    if (!activity) return res.status(404).json({ error: "Activity not found" })
+    res.json(activity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取活动信息失败" })
+  }
 })
 
 app.put("/api/activities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const activity = await activityModel.update(parseInt(req.params.id), req.body)
-  if (!activity) return res.status(404).json({ error: "Activity not found" })
-  res.json(activity)
+  try {
+    const activity = await activityModel.update(parseInt(req.params.id), req.body)
+    if (!activity) return res.status(404).json({ error: "Activity not found" })
+    res.json(activity)
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "更新活动失败" })
+  }
 })
 
 app.delete("/api/activities/:id", checkAuth, async (req: AuthRequest, res: Response) => {
-  const deleted = await activityModel.delete(parseInt(req.params.id))
-  if (!deleted) return res.status(404).json({ error: "Activity not found" })
-  res.json({ message: "Activity deleted" })
+  try {
+    const deleted = await activityModel.delete(parseInt(req.params.id))
+    if (!deleted) return res.status(404).json({ error: "Activity not found" })
+    res.json({ message: "Activity deleted" })
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "删除活动失败" })
+  }
 })
 
 // Dashboard stats
 app.get("/api/dashboard/stats", checkAuth, async (req: AuthRequest, res: Response) => {
-  const customerStats = await customerModel.getStats()
-  const pipelineStats = await opportunityModel.getPipelineStats()
-  const upcomingActivities = await activityModel.getUpcoming()
+  try {
+    const customerStats = await customerModel.getStats()
+    const pipelineStats = await opportunityModel.getPipelineStats()
+    const upcomingActivities = await activityModel.getUpcoming()
 
-  res.json({
-    customers: customerStats,
-    pipeline: pipelineStats,
-    upcoming_activities: upcomingActivities,
-  })
+    res.json({
+      customers: customerStats,
+      pipeline: pipelineStats,
+      upcoming_activities: upcomingActivities,
+    })
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || "获取仪表板数据失败" })
+  }
+})
+
+// 全局错误处理中间件
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.error("未捕获的错误:", error)
+  res.status(500).json({ error: "服务器内部错误" })
+})
+
+// 404 处理
+app.use((req: Request, res: Response) => {
+  res.status(404).json({ error: "接口不存在" })
 })
 
 // Root route
