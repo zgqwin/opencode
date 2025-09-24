@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>联系我们 - EDDY-PRO 电磁涡流检测系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-animation">
+      <canvas id="particleCanvas"></canvas>
+      <div class="gradient-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">EDDY-PRO</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">首页</a></li>
+          <li><a href="/product" class="nav-link">产品详情</a></li>
+          <li><a href="/cases" class="nav-link">应用案例</a></li>
+          <li><a href="/docs" class="nav-link">技术文档</a></li>
+          <li><a href="/contact" class="nav-link active">联系我们</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="demo-btn" onclick="window.location.href='/';">返回首页</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="contact-hero">
+      <div class="container">
+        <div class="contact-header">
+          <h1>联系我们</h1>
+          <p>专业的技术团队为您提供全方位的技术支持和服务</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-content">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-form-section">
+            <h2>在线咨询</h2>
+            <form id="contact-form" class="contact-form">
+              <div class="form-group">
+                <label for="name">姓名 *</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="company">公司名称</label>
+                <input type="text" id="company" name="company" />
+              </div>
+
+              <div class="form-group">
+                <label for="email">电子邮箱 *</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">联系电话</label>
+                <input type="tel" id="phone" name="phone" />
+              </div>
+
+              <div class="form-group">
+                <label for="industry">所属行业</label>
+                <select id="industry" name="industry">
+                  <option value="">请选择行业</option>
+                  <option value="aerospace">航空航天</option>
+                  <option value="automotive">汽车制造</option>
+                  <option value="energy">能源电力</option>
+                  <option value="petrochemical">石油化工</option>
+                  <option value="other">其他行业</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">咨询内容 *</label>
+                <textarea id="message" name="message" rows="6" required placeholder="请详细描述您的需求..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">
+                <span>提交咨询</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <div class="contact-info-section">
+            <h2>联系信息</h2>
+
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="method-icon">📞</div>
+                <div class="method-content">
+                  <h4>销售热线</h4>
+                  <p>400-123-4567</p>
+                  <span class="method-note">工作日 9:00-18:00</span>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">📧</div>
+                <div class="method-content">
+                  <h4>电子邮箱</h4>
+                  <p>sales@eddy-pro.com</p>
+                  <span class="method-note">技术支持: support@eddy-pro.com</span>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">📍</div>
+                <div class="method-content">
+                  <h4>公司地址</h4>
+                  <p>北京市海淀区科技园区88号</p>
+                  <span class="method-note">创新大厦A座15层</span>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">🕒</div>
+                <div class="method-content">
+                  <h4>工作时间</h4>
+                  <p>周一至周五: 9:00-18:00</p>
+                  <span class="method-note">周六: 9:00-12:00（技术支持）</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-section">
+              <h4>地理位置</h4>
+              <div class="map-placeholder">
+                <div class="map-content">
+                  <h5>北京总部</h5>
+                  <p>📍 北京市海淀区科技园区88号</p>
+                  <p>🚇 地铁10号线科技园站A出口</p>
+                  <p>🚌 公交科技园站: 333路, 466路</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <div class="container">
+        <h2>专业团队</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="member-avatar">👨‍💼</div>
+            <h4>张经理</h4>
+            <p>销售总监</p>
+            <span class="member-contact">📞 138-0013-8000</span>
+          </div>
+
+          <div class="team-member">
+            <div class="member-avatar">👩‍🔧</div>
+            <h4>李工程师</h4>
+            <p>技术总监</p>
+            <span class="member-contact">📞 138-0013-8001</span>
+          </div>
+
+          <div class="team-member">
+            <div class="member-avatar">👨‍🔬</div>
+            <h4>王博士</h4>
+            <p>研发总监</p>
+            <span class="member-contact">📞 138-0013-8002</span>
+          </div>
+
+          <div class="team-member">
+            <div class="member-avatar">👩‍💻</div>
+            <h4>刘工程师</h4>
+            <p>技术支持</p>
+            <span class="member-contact">📞 138-0013-8003</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <span class="logo-icon">⚡</span>
+              <span class="logo-text">EDDY-PRO</span>
+            </div>
+            <p>专业的工业无损检测解决方案提供商</p>
+          </div>
+          <div class="footer-section">
+            <h4>快速链接</h4>
+            <a href="/product">产品详情</a>
+            <a href="/cases">应用案例</a>
+            <a href="/docs">技术文档</a>
+          </div>
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <p>📞 400-123-4567</p>
+            <p>📧 sales@eddy-pro.com</p>
+            <p>📍 北京市海淀区科技园区88号</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EDDY-PRO. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

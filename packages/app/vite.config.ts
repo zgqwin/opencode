@@ -14,7 +14,11 @@ export default defineConfig({
   plugins: [
     generateThemeCSS(),
     tailwindcss(),
-    solidPlugin(),
+    solidPlugin({
+      solid: {
+        omitNestedClosingTags: false,
+      },
+    }),
     iconsSpritesheet({
       withTypes: true,
       inputDir: "src/assets/file-icons",

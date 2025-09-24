@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDDY-PRO | 工业级电磁涡流检测系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 3D背景效果 -->
+    <div class="bg-animation">
+      <canvas id="particleCanvas"></canvas>
+      <div class="gradient-overlay"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">EDDY-PRO</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link active">首页</a></li>
+          <li><a href="/product" class="nav-link">产品详情</a></li>
+          <li><a href="/cases" class="nav-link">应用案例</a></li>
+          <li><a href="/docs" class="nav-link">技术文档</a></li>
+          <li><a href="/contact" class="nav-link">联系我们</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="demo-btn" onclick="startDemo()">在线演示</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>工业4.0智能检测方案</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-main">电磁涡流</span>
+          <span class="title-sub">智能检测系统</span>
+        </h1>
+        <p class="hero-description">
+          基于人工智能的工业无损检测解决方案，实现微米级精度检测， 为制造业提供可靠的质量保障
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">99.9%</span>
+            <span class="stat-label">检测准确率</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">0.1μm</span>
+            <span class="stat-label">检测精度</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">成功案例</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="cta-primary" onclick="scrollToDemo()">
+            <span>体验检测演示</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </button>
+          <button class="cta-secondary" onclick="window.location.href='/product'">查看产品详情</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="device-model" id="deviceModel">
+          <div class="device-base"></div>
+          <div class="device-probe"></div>
+          <div class="device-screen">
+            <div class="screen-content">
+              <div class="wave-animation"></div>
+              <div class="detection-points"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特性展示 -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>核心技术优势</h2>
+          <p>创新的检测技术，满足工业高标准需求</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card" data-aos="fade-up">
+            <div class="feature-icon">🎯</div>
+            <h3>超高精度检测</h3>
+            <p>采用先进的信号处理算法，检测精度达到微米级别</p>
+            <div class="feature-demo" onclick="showPrecisionDemo()">
+              <span>查看精度演示</span>
+            </div>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">⚡</div>
+            <h3>实时数据分析</h3>
+            <p>AI算法实时分析检测数据，自动识别缺陷类型</p>
+            <div class="feature-demo" onclick="showAnalysisDemo()">
+              <span>体验数据分析</span>
+            </div>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">🌐</div>
+            <h3>云端数据管理</h3>
+            <p>检测数据实时上传云端，支持远程监控和分析</p>
+            <div class="feature-demo" onclick="showCloudDemo()">
+              <span>查看云端界面</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 互动演示区域 -->
+    <section class="demo-section" id="demoSection">
+      <div class="container">
+        <div class="demo-container">
+          <h2>在线检测演示</h2>
+          <p>拖动滑块模拟不同材料的检测效果</p>
+
+          <div class="demo-interface">
+            <div class="material-selector">
+              <div class="material-option active" data-material="steel">
+                <span>钢材</span>
+              </div>
+              <div class="material-option" data-material="aluminum">
+                <span>铝合金</span>
+              </div>
+              <div class="material-option" data-material="copper">
+                <span>铜材</span>
+              </div>
+            </div>
+
+            <div class="detection-area">
+              <canvas id="detectionCanvas" width="600" height="300"></canvas>
+              <div class="detection-controls">
+                <input type="range" id="defectSlider" min="0" max="100" value="0" />
+                <span id="defectValue">缺陷程度: 0%</span>
+              </div>
+            </div>
+
+            <div class="results-panel">
+              <h4>检测结果</h4>
+              <div class="result-item">
+                <span>材料类型:</span>
+                <span id="materialType">钢材</span>
+              </div>
+              <div class="result-item">
+                <span>缺陷检测:</span>
+                <span id="defectStatus">无缺陷</span>
+              </div>
+              <div class="result-item">
+                <span>置信度:</span>
+                <span id="confidence">99.8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行业应用 -->
+    <section class="industries">
+      <div class="container">
+        <div class="section-header">
+          <h2>行业应用领域</h2>
+          <p>广泛应用于各工业领域的质量检测</p>
+        </div>
+        <div class="industries-grid">
+          <div class="industry-card" onclick="showIndustryDetail('aerospace')">
+            <div class="industry-icon">✈️</div>
+            <h3>航空航天</h3>
+            <p>飞机零部件、发动机叶片检测</p>
+          </div>
+          <div class="industry-card" onclick="showIndustryDetail('automotive')">
+            <div class="industry-icon">🚗</div>
+            <h3>汽车制造</h3>
+            <p>汽车零部件、焊接质量检测</p>
+          </div>
+          <div class="industry-card" onclick="showIndustryDetail('energy')">
+            <div class="industry-icon">⚡</div>
+            <h3>能源电力</h3>
+            <p>变压器、发电机部件检测</p>
+          </div>
+          <div class="industry-card" onclick="showIndustryDetail('petrochemical')">
+            <div class="industry-icon">🏭</div>
+            <h3>石油化工</h3>
+            <p>管道、压力容器检测</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <span class="logo-icon">⚡</span>
+              <span class="logo-text">EDDY-PRO</span>
+            </div>
+            <p>专业的工业无损检测解决方案提供商</p>
+          </div>
+          <div class="footer-section">
+            <h4>快速链接</h4>
+            <a href="/product">产品详情</a>
+            <a href="/cases">应用案例</a>
+            <a href="/docs">技术文档</a>
+          </div>
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <p>📞 400-123-4567</p>
+            <p>📧 sales@eddy-pro.com</p>
+            <p>📍 北京市海淀区科技园区88号</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EDDY-PRO. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 模态框 -->
+    <div id="demoModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <script src="js/particles.js"></script>
+    <script src="js/detection-demo.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

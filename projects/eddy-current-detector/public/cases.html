@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>应用案例 - EDDY-PRO 电磁涡流检测系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-animation">
+      <canvas id="particleCanvas"></canvas>
+      <div class="gradient-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">EDDY-PRO</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">首页</a></li>
+          <li><a href="/product" class="nav-link">产品详情</a></li>
+          <li><a href="/cases" class="nav-link active">应用案例</a></li>
+          <li><a href="/docs" class="nav-link">技术文档</a></li>
+          <li><a href="/contact" class="nav-link">联系我们</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="demo-btn" onclick="window.location.href='/';">返回首页</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="cases-hero">
+      <div class="container">
+        <div class="cases-hero-content">
+          <div class="hero-text">
+            <span class="cases-badge">🏆 500+ 成功案例</span>
+            <h1>行业应用案例</h1>
+            <p class="hero-description">
+              EDDY-PRO 系统已在航空航天、汽车制造、能源电力等多个行业成功应用， 为客户提供精准、高效的检测解决方案。
+            </p>
+
+            <div class="industry-stats">
+              <div class="stat">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">成功案例</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">客户满意度</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">行业覆盖</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="industry-chart">
+              <div class="chart-bar" data-industry="aerospace" style="height: 90%">
+                <span>航空航天</span>
+                <span class="chart-value">90%</span>
+              </div>
+              <div class="chart-bar" data-industry="automotive" style="height: 85%">
+                <span>汽车制造</span>
+                <span class="chart-value">85%</span>
+              </div>
+              <div class="chart-bar" data-industry="energy" style="height: 80%">
+                <span>能源电力</span>
+                <span class="chart-value">80%</span>
+              </div>
+              <div class="chart-bar" data-industry="petrochemical" style="height: 75%">
+                <span>石油化工</span>
+                <span class="chart-value">75%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases-filter">
+      <div class="container">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">全部案例</button>
+          <button class="filter-tab" data-filter="aerospace">✈️ 航空航天</button>
+          <button class="filter-tab" data-filter="automotive">🚗 汽车制造</button>
+          <button class="filter-tab" data-filter="energy">⚡ 能源电力</button>
+          <button class="filter-tab" data-filter="petrochemical">🏭 石油化工</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases-showcase">
+      <div class="container">
+        <div class="cases-grid">
+          <div class="case-card" data-industry="aerospace">
+            <div class="case-header">
+              <div class="case-image">
+                <div class="image-placeholder">
+                  <span>✈️</span>
+                </div>
+              </div>
+              <div class="case-meta">
+                <span class="case-industry">航空航天</span>
+                <span class="case-date">2024年6月</span>
+              </div>
+            </div>
+
+            <div class="case-content">
+              <h3>航空发动机制造商叶片检测项目</h3>
+              <p class="case-description">
+                为国内某大型航空发动机制造商提供发动机叶片微裂纹检测解决方案，
+                实现了0.1μm精度的缺陷检测，检测准确率达到99.9%。
+              </p>
+
+              <div class="case-highlights">
+                <div class="highlight">
+                  <span class="highlight-icon">🎯</span>
+                  <span>检测精度: 0.1μm</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">⚡</span>
+                  <span>检测速度: 3秒/件</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">📊</span>
+                  <span>准确率: 99.9%</span>
+                </div>
+              </div>
+
+              <div class="case-results">
+                <div class="result-item">
+                  <span>检测效率提升</span>
+                  <span class="result-value">300%</span>
+                </div>
+                <div class="result-item">
+                  <span>缺陷检出率</span>
+                  <span class="result-value">99.9%</span>
+                </div>
+                <div class="result-item">
+                  <span>误报率降低</span>
+                  <span class="result-value">95%</span>
+                </div>
+              </div>
+
+              <button class="case-detail-btn" onclick="showCaseDetail('aerospace')">查看详情</button>
+            </div>
+          </div>
+
+          <div class="case-card" data-industry="automotive">
+            <div class="case-header">
+              <div class="case-image">
+                <div class="image-placeholder">
+                  <span>🚗</span>
+                </div>
+              </div>
+              <div class="case-meta">
+                <span class="case-industry">汽车制造</span>
+                <span class="case-date">2024年5月</span>
+              </div>
+            </div>
+
+            <div class="case-content">
+              <h3>汽车零部件焊接质量检测项目</h3>
+              <p class="case-description">
+                为某知名汽车零部件供应商提供自动化焊接质量检测方案，
+                实现生产线在线检测，大幅提升生产效率和产品质量稳定性。
+              </p>
+
+              <div class="case-highlights">
+                <div class="highlight">
+                  <span class="highlight-icon">⏱️</span>
+                  <span>检测周期: 5秒/件</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">✅</span>
+                  <span>合格率: 99.8%</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">💰</span>
+                  <span>成本降低: 70%</span>
+                </div>
+              </div>
+
+              <div class="case-results">
+                <div class="result-item">
+                  <span>检测速度</span>
+                  <span class="result-value">5秒/件</span>
+                </div>
+                <div class="result-item">
+                  <span>质量合格率</span>
+                  <span class="result-value">99.8%</span>
+                </div>
+                <div class="result-item">
+                  <span>人工成本降低</span>
+                  <span class="result-value">70%</span>
+                </div>
+              </div>
+
+              <button class="case-detail-btn" onclick="showCaseDetail('automotive')">查看详情</button>
+            </div>
+          </div>
+
+          <div class="case-card" data-industry="energy">
+            <div class="case-header">
+              <div class="case-image">
+                <div class="image-placeholder">
+                  <span>⚡</span>
+                </div>
+              </div>
+              <div class="case-meta">
+                <span class="case-industry">能源电力</span>
+                <span class="case-date">2024年4月</span>
+              </div>
+            </div>
+
+            <div class="case-content">
+              <h3>变压器关键部件检测项目</h3>
+              <p class="case-description">
+                为某大型变压器制造商提供绕组缺陷检测方案， 实现设备故障早期预警，显著提升设备可靠性和使用寿命。
+              </p>
+
+              <div class="case-highlights">
+                <div class="highlight">
+                  <span class="highlight-icon">🔍</span>
+                  <span>预警准确率: 98.5%</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">🔧</span>
+                  <span>维护成本降低: 60%</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">⏳</span>
+                  <span>寿命延长: 30%</span>
+                </div>
+              </div>
+
+              <div class="case-results">
+                <div class="result-item">
+                  <span>故障预警准确率</span>
+                  <span class="result-value">98.5%</span>
+                </div>
+                <div class="result-item">
+                  <span>维护成本降低</span>
+                  <span class="result-value">60%</span>
+                </div>
+                <div class="result-item">
+                  <span>设备寿命延长</span>
+                  <span class="result-value">30%</span>
+                </div>
+              </div>
+
+              <button class="case-detail-btn" onclick="showCaseDetail('energy')">查看详情</button>
+            </div>
+          </div>
+
+          <div class="case-card" data-industry="petrochemical">
+            <div class="case-header">
+              <div class="case-image">
+                <div class="image-placeholder">
+                  <span>🏭</span>
+                </div>
+              </div>
+              <div class="case-meta">
+                <span class="case-industry">石油化工</span>
+                <span class="case-date">2024年3月</span>
+              </div>
+            </div>
+
+            <div class="case-content">
+              <h3>石化管道腐蚀检测项目</h3>
+              <p class="case-description">
+                为某大型石化企业提供管道腐蚀检测解决方案， 实现管道壁厚变化的精确测量，保障生产安全。
+              </p>
+
+              <div class="case-highlights">
+                <div class="highlight">
+                  <span class="highlight-icon">📏</span>
+                  <span>测量精度: 0.05mm</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">🛡️</span>
+                  <span>安全预警: 100%</span>
+                </div>
+                <div class="highlight">
+                  <span class="highlight-icon">💸</span>
+                  <span>维护费用节省: 50%</span>
+                </div>
+              </div>
+
+              <div class="case-results">
+                <div class="result-item">
+                  <span>检测精度</span>
+                  <span class="result-value">0.05mm</span>
+                </div>
+                <div class="result-item">
+                  <span>安全预警率</span>
+                  <span class="result-value">100%</span>
+                </div>
+                <div class="result-item">
+                  <span>维护费用节省</span>
+                  <span class="result-value">50%</span>
+                </div>
+              </div>
+
+              <button class="case-detail-btn" onclick="showCaseDetail('petrochemical')">查看详情</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="clients-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>合作客户</h2>
+          <p>与行业领先企业建立长期合作关系</p>
+        </div>
+
+        <div class="clients-showcase">
+          <div class="client-grid">
+            <div class="client-card">
+              <div class="client-logo">
+                <span>✈️</span>
+              </div>
+              <div class="client-info">
+                <h4>中国航空工业</h4>
+                <p>航空航天制造</p>
+                <span class="client-tag">战略合作伙伴</span>
+              </div>
+            </div>
+
+            <div class="client-card">
+              <div class="client-logo">
+                <span>🚗</span>
+              </div>
+              <div class="client-info">
+                <h4>上海汽车集团</h4>
+                <p>汽车制造</p>
+                <span class="client-tag">长期合作</span>
+              </div>
+            </div>
+
+            <div class="client-card">
+              <div class="client-logo">
+                <span>⚡</span>
+              </div>
+              <div class="client-info">
+                <h4>国家电网</h4>
+                <p>能源电力</p>
+                <span class="client-tag">技术合作伙伴</span>
+              </div>
+            </div>
+
+            <div class="client-card">
+              <div class="client-logo">
+                <span>🏭</span>
+              </div>
+              <div class="client-info">
+                <h4>中石化</h4>
+                <p>石油化工</p>
+                <span class="client-tag">设备供应商</span>
+              </div>
+            </div>
+
+            <div class="client-card">
+              <div class="client-logo">
+                <span>📱</span>
+              </div>
+              <div class="client-info">
+                <h4>华为技术</h4>
+                <p>通信设备</p>
+                <span class="client-tag">技术合作</span>
+              </div>
+            </div>
+
+            <div class="client-card">
+              <div class="client-logo">
+                <span>🔋</span>
+              </div>
+              <div class="client-info">
+                <h4>比亚迪</h4>
+                <p>新能源汽车</p>
+                <span class="client-tag">创新合作</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>开始您的检测项目</h2>
+          <p>联系我们获取定制化的检测解决方案，让EDDY-PRO为您的业务保驾护航。</p>
+          <div class="cta-actions">
+            <button class="cta-primary" onclick="window.location.href='/contact'">📞 咨询方案</button>
+            <button class="cta-secondary" onclick="window.location.href='/docs'">📚 技术文档</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <span class="logo-icon">⚡</span>
+              <span class="logo-text">EDDY-PRO</span>
+            </div>
+            <p>专业的工业无损检测解决方案提供商</p>
+          </div>
+          <div class="footer-section">
+            <h4>快速链接</h4>
+            <a href="/product">产品详情</a>
+            <a href="/cases">应用案例</a>
+            <a href="/docs">技术文档</a>
+          </div>
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <p>📞 400-123-4567</p>
+            <p>📧 sales@eddy-pro.com</p>
+            <p>📍 北京市海淀区科技园区88号</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EDDY-PRO. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/cases.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

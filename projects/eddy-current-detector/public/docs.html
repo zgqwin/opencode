@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>技术文档 - EDDY-PRO 电磁涡流检测系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-animation">
+      <canvas id="particleCanvas"></canvas>
+      <div class="gradient-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">EDDY-PRO</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">首页</a></li>
+          <li><a href="/product" class="nav-link">产品详情</a></li>
+          <li><a href="/cases" class="nav-link">应用案例</a></li>
+          <li><a href="/docs" class="nav-link active">技术文档</a></li>
+          <li><a href="/contact" class="nav-link">联系我们</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="demo-btn" onclick="window.location.href='/';">返回首页</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-header">
+          <h1>技术文档中心</h1>
+          <p>全面的技术资料、操作手册和API文档</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-content">
+      <div class="container">
+        <div class="docs-container">
+          <div class="docs-sidebar">
+            <h3>文档分类</h3>
+            <ul class="docs-nav">
+              <li><a href="#user-manual" class="docs-nav-link active">用户手册</a></li>
+              <li><a href="#technical-spec" class="docs-nav-link">技术规格</a></li>
+              <li><a href="#api-docs" class="docs-nav-link">API文档</a></li>
+              <li><a href="#troubleshooting" class="docs-nav-link">故障排除</a></li>
+              <li><a href="#certifications" class="docs-nav-link">认证证书</a></li>
+            </ul>
+          </div>
+
+          <div class="docs-main">
+            <section id="user-manual" class="docs-section">
+              <h2>用户操作手册</h2>
+              <div class="doc-card">
+                <h3>快速入门指南</h3>
+                <p>了解如何快速设置和使用EDDY-PRO检测系统</p>
+                <div class="doc-actions">
+                  <button class="download-btn" onclick="downloadDoc('quick-start')">下载PDF</button>
+                  <button class="view-btn" onclick="viewOnline('quick-start')">在线查看</button>
+                </div>
+              </div>
+
+              <div class="doc-card">
+                <h3>详细操作手册</h3>
+                <p>完整的系统操作指南，包含所有功能说明</p>
+                <div class="doc-actions">
+                  <button class="download-btn" onclick="downloadDoc('full-manual')">下载PDF</button>
+                  <button class="view-btn" onclick="viewOnline('full-manual')">在线查看</button>
+                </div>
+              </div>
+            </section>
+
+            <section id="technical-spec" class="docs-section">
+              <h2>技术规格文档</h2>
+              <div class="specs-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>参数</th>
+                      <th>规格</th>
+                      <th>说明</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>检测原理</td>
+                      <td>电磁涡流</td>
+                      <td>基于法拉第电磁感应定律</td>
+                    </tr>
+                    <tr>
+                      <td>检测频率</td>
+                      <td>1kHz - 10MHz</td>
+                      <td>可调频率范围</td>
+                    </tr>
+                    <tr>
+                      <td>检测精度</td>
+                      <td>0.1μm</td>
+                      <td>最小可检测缺陷尺寸</td>
+                    </tr>
+                    <tr>
+                      <td>检测速度</td>
+                      <td>100mm/s</td>
+                      <td>最大扫描速度</td>
+                    </tr>
+                    <tr>
+                      <td>工作温度</td>
+                      <td>-20°C 至 60°C</td>
+                      <td>环境温度范围</td>
+                    </tr>
+                    <tr>
+                      <td>防护等级</td>
+                      <td>IP65</td>
+                      <td>防尘防水等级</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="api-docs" class="docs-section">
+              <h2>API接口文档</h2>
+              <div class="api-endpoints">
+                <div class="api-endpoint">
+                  <h4>检测数据获取</h4>
+                  <code>GET /api/detection/data</code>
+                  <p>获取实时检测数据流</p>
+                </div>
+                <div class="api-endpoint">
+                  <h4>设备控制</h4>
+                  <code>POST /api/device/control</code>
+                  <p>远程控制检测设备</p>
+                </div>
+                <div class="api-endpoint">
+                  <h4>报告生成</h4>
+                  <code>POST /api/report/generate</code>
+                  <p>生成检测报告</p>
+                </div>
+              </div>
+            </section>
+
+            <section id="troubleshooting" class="docs-section">
+              <h2>故障排除指南</h2>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <h4>设备无法启动</h4>
+                  <p>检查电源连接，确认电压稳定在220V±10%范围内</p>
+                </div>
+                <div class="faq-item">
+                  <h4>检测信号不稳定</h4>
+                  <p>检查探头连接，确保接触良好，避免电磁干扰</p>
+                </div>
+                <div class="faq-item">
+                  <h4>软件连接失败</h4>
+                  <p>检查网络连接，确认防火墙设置允许软件通信</p>
+                </div>
+              </div>
+            </section>
+
+            <section id="certifications" class="docs-section">
+              <h2>认证证书</h2>
+              <div class="certs-grid">
+                <div class="cert-item">
+                  <h4>ISO 9001认证</h4>
+                  <p>质量管理体系认证</p>
+                  <button class="view-btn" onclick="viewCert('iso9001')">查看证书</button>
+                </div>
+                <div class="cert-item">
+                  <h4>CE认证</h4>
+                  <p>欧洲市场准入认证</p>
+                  <button class="view-btn" onclick="viewCert('ce')">查看证书</button>
+                </div>
+                <div class="cert-item">
+                  <h4>RoHS认证</h4>
+                  <p>环保认证</p>
+                  <button class="view-btn" onclick="viewCert('rohs')">查看证书</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <span class="logo-icon">⚡</span>
+              <span class="logo-text">EDDY-PRO</span>
+            </div>
+            <p>专业的工业无损检测解决方案提供商</p>
+          </div>
+          <div class="footer-section">
+            <h4>快速链接</h4>
+            <a href="/product">产品详情</a>
+            <a href="/cases">应用案例</a>
+            <a href="/docs">技术文档</a>
+          </div>
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <p>📞 400-123-4567</p>
+            <p>📧 sales@eddy-pro.com</p>
+            <p>📍 北京市海淀区科技园区88号</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EDDY-PRO. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/docs.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

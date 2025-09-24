@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>电子手表推荐</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>智能手表推荐</h1>
+      <p>为您精选最佳电子手表选择</p>
+    </header>
+
+    <main>
+      <section class="filters">
+        <h2>筛选条件</h2>
+        <div class="filter-group">
+          <label for="price-range">价格范围：</label>
+          <select id="price-range">
+            <option value="all">全部</option>
+            <option value="budget">1000元以下</option>
+            <option value="mid-range">1000-3000元</option>
+            <option value="premium">3000元以上</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="brand">品牌：</label>
+          <select id="brand">
+            <option value="all">全部</option>
+            <option value="apple">Apple</option>
+            <option value="samsung">Samsung</option>
+            <option value="huawei">华为</option>
+            <option value="xiaomi">小米</option>
+            <option value="garmin">Garmin</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="watches">
+        <div class="watch-grid" id="watch-grid">
+          <!-- 手表卡片将通过JavaScript动态生成 -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 电子手表推荐平台</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

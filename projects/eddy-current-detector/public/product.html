@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>产品详情 - EDDY-PRO 电磁涡流检测系统</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-animation">
+      <canvas id="particleCanvas"></canvas>
+      <div class="gradient-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">EDDY-PRO</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">首页</a></li>
+          <li><a href="/product" class="nav-link active">产品详情</a></li>
+          <li><a href="/cases" class="nav-link">应用案例</a></li>
+          <li><a href="/docs" class="nav-link">技术文档</a></li>
+          <li><a href="/contact" class="nav-link">联系我们</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="demo-btn" onclick="window.location.href='/';">返回首页</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="product-hero">
+      <div class="container">
+        <div class="product-hero-content">
+          <div class="hero-text">
+            <span class="product-badge">⚡ 最新一代智能检测系统</span>
+            <h1>EDDY-PRO 电磁涡流检测系统</h1>
+            <p class="hero-description">
+              革命性的工业无损检测解决方案，集成了人工智能、云计算和物联网技术，为现代制造业提供精准、高效的检测服务。
+            </p>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <span class="stat-number">0.1μm</span>
+                <span class="stat-label">检测精度</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">&lt;10ms</span>
+                <span class="stat-label">响应时间</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">检测准确率</span>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button class="cta-primary" onclick="window.location.href='/contact'">📞 获取报价</button>
+              <button class="cta-secondary" onclick="window.location.href='/docs'">📚 查看文档</button>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="product-showcase">
+              <div class="showcase-device">
+                <div class="device-body">
+                  <div class="device-screen">
+                    <div class="screen-content">
+                      <div class="wave-display"></div>
+                      <div class="detection-points"></div>
+                    </div>
+                  </div>
+                  <div class="device-controls">
+                    <div class="control-button"></div>
+                    <div class="control-button"></div>
+                    <div class="control-button"></div>
+                  </div>
+                </div>
+                <div class="device-probe">
+                  <div class="probe-tip"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-features">
+      <div class="container">
+        <div class="section-header">
+          <h2>核心特性</h2>
+          <p>EDDY-PRO 系统的独特优势和技术创新</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>超高精度检测</h3>
+            <p>采用先进的信号处理算法，检测精度达到0.1微米，能够发现肉眼无法识别的微小缺陷。</p>
+            <div class="feature-details">
+              <span>精度: 0.1μm</span>
+              <span>分辨率: 0.01μm</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>实时智能分析</h3>
+            <p>集成AI算法，实时分析检测数据，自动识别缺陷类型并提供优化建议。</p>
+            <div class="feature-details">
+              <span>响应时间: &lt;10ms</span>
+              <span>AI准确率: 99.9%</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>云端数据管理</h3>
+            <p>支持云端数据存储和分析，实现远程监控、历史数据追溯和智能报告生成。</p>
+            <div class="feature-details">
+              <span>存储容量: 1TB</span>
+              <span>多用户支持: 50+</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>工业级可靠性</h3>
+            <p>IP65防护等级，宽温工作范围，适应各种恶劣工业环境，确保长期稳定运行。</p>
+            <div class="feature-details">
+              <span>工作温度: -20°C~60°C</span>
+              <span>防护等级: IP65</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="technical-specs">
+      <div class="container">
+        <div class="section-header">
+          <h2>详细技术规格</h2>
+          <p>全面的技术参数和性能指标</p>
+        </div>
+
+        <div class="specs-tabs">
+          <div class="tab-nav">
+            <button class="tab-link active" data-tab="detection">检测性能</button>
+            <button class="tab-link" data-tab="hardware">硬件规格</button>
+            <button class="tab-link" data-tab="software">软件功能</button>
+            <button class="tab-link" data-tab="certifications">认证标准</button>
+          </div>
+
+          <div class="tab-content">
+            <div id="detection" class="tab-pane active">
+              <div class="specs-grid">
+                <div class="spec-group">
+                  <h4>基本参数</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">检测原理</span>
+                    <span class="spec-value">电磁涡流</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">检测精度</span>
+                    <span class="spec-value">0.1μm</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">检测频率</span>
+                    <span class="spec-value">1kHz - 10MHz</span>
+                  </div>
+                </div>
+
+                <div class="spec-group">
+                  <h4>性能指标</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">响应时间</span>
+                    <span class="spec-value">&lt;10ms</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">检测速度</span>
+                    <span class="spec-value">100mm/s</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">准确率</span>
+                    <span class="spec-value">99.9%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="hardware" class="tab-pane">
+              <div class="specs-grid">
+                <div class="spec-group">
+                  <h4>物理特性</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">工作温度</span>
+                    <span class="spec-value">-20°C 至 60°C</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">防护等级</span>
+                    <span class="spec-value">IP65</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">设备重量</span>
+                    <span class="spec-value">8.5kg</span>
+                  </div>
+                </div>
+
+                <div class="spec-group">
+                  <h4>电气参数</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">电源要求</span>
+                    <span class="spec-value">220V AC / 24V DC</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">功耗</span>
+                    <span class="spec-value">≤150W</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">接口类型</span>
+                    <span class="spec-value">USB 3.0, Ethernet</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="software" class="tab-pane">
+              <div class="specs-grid">
+                <div class="spec-group">
+                  <h4>核心功能</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">AI智能分析</span>
+                    <span class="spec-value">支持</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">云端数据管理</span>
+                    <span class="spec-value">支持</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">实时监控</span>
+                    <span class="spec-value">支持</span>
+                  </div>
+                </div>
+
+                <div class="spec-group">
+                  <h4>系统配置</h4>
+                  <div class="spec-item">
+                    <span class="spec-label">云端存储</span>
+                    <span class="spec-value">1TB</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">多用户支持</span>
+                    <span class="spec-value">最多50用户</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">数据保留</span>
+                    <span class="spec-value">永久</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="certifications" class="tab-pane">
+              <div class="cert-grid">
+                <div class="cert-item">
+                  <h4>ISO 9001</h4>
+                  <p>质量管理体系认证</p>
+                  <span class="cert-status">已认证</span>
+                </div>
+                <div class="cert-item">
+                  <h4>CE认证</h4>
+                  <p>欧洲市场准入认证</p>
+                  <span class="cert-status">已认证</span>
+                </div>
+                <div class="cert-item">
+                  <h4>RoHS</h4>
+                  <p>环保认证</p>
+                  <span class="cert-status">已认证</span>
+                </div>
+                <div class="cert-item">
+                  <h4>UL认证</h4>
+                  <p>安全认证</p>
+                  <span class="cert-status">已认证</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-gallery">
+      <div class="container">
+        <div class="section-header">
+          <h2>产品展示</h2>
+          <p>实际应用场景和设备展示</p>
+        </div>
+
+        <div class="gallery-showcase">
+          <div class="showcase-main">
+            <div class="main-image">
+              <div class="image-placeholder">
+                <span>📷 设备外观展示</span>
+                <p>工业级设计，坚固耐用，适应各种工作环境</p>
+              </div>
+            </div>
+            <div class="main-description">
+              <h3>专业工业设计</h3>
+              <p>
+                EDDY-PRO采用坚固的金属外壳设计，具备IP65防护等级，能够在恶劣的工业环境中稳定工作。人性化的操作界面和便携式设计，让检测工作更加高效便捷。
+              </p>
+              <div class="design-features">
+                <span>🔒 IP65防护</span>
+                <span>⚖️ 轻量化设计</span>
+                <span>🔋 长续航电池</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-image">
+                <div class="image-placeholder">
+                  <span>🖥️ 检测界面</span>
+                </div>
+              </div>
+              <div class="gallery-info">
+                <h4>智能操作界面</h4>
+                <p>直观的图形化界面，支持触摸操作，实时显示检测数据和分析结果。</p>
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <div class="gallery-image">
+                <div class="image-placeholder">
+                  <span>📊 数据分析</span>
+                </div>
+              </div>
+              <div class="gallery-info">
+                <h4>深度数据分析</h4>
+                <p>AI算法自动分析检测数据，生成详细的检测报告和趋势分析。</p>
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <div class="gallery-image">
+                <div class="image-placeholder">
+                  <span>☁️ 云端管理</span>
+                </div>
+              </div>
+              <div class="gallery-info">
+                <h4>云端数据管理</h4>
+                <p>支持远程数据同步，多设备协同工作，实现智能化工厂管理。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>立即体验 EDDY-PRO</h2>
+          <p>联系我们获取产品演示和详细报价，让专业的检测解决方案助力您的业务发展。</p>
+          <div class="cta-actions">
+            <button class="cta-primary" onclick="window.location.href='/contact'">📞 预约演示</button>
+            <button class="cta-secondary" onclick="window.location.href='/docs'">📚 技术文档</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo">
+              <span class="logo-icon">⚡</span>
+              <span class="logo-text">EDDY-PRO</span>
+            </div>
+            <p>专业的工业无损检测解决方案提供商</p>
+          </div>
+          <div class="footer-section">
+            <h4>快速链接</h4>
+            <a href="/product">产品详情</a>
+            <a href="/cases">应用案例</a>
+            <a href="/docs">技术文档</a>
+          </div>
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <p>📞 400-123-4567</p>
+            <p>📧 sales@eddy-pro.com</p>
+            <p>📍 北京市海淀区科技园区88号</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 EDDY-PRO. 版权所有.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
